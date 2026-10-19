@@ -1,0 +1,69 @@
+spring:
+  application:
+    name: cathaybk-data-sync
+
+# Cloudability 環境設定
+# API Key 請使用環境變數注入，切勿明文寫入此檔案
+cloudability:
+  base-url: https://api.cloudability.com/v3
+  # 子公司環境（7 個）
+  subsidiaries:
+    - name: "子公司A"
+      api-key: "${SUBSIDIARY_A_API_KEY}"
+    - name: "子公司B"
+      api-key: "${SUBSIDIARY_B_API_KEY}"
+    - name: "子公司C"
+      api-key: "${SUBSIDIARY_C_API_KEY}"
+    - name: "子公司D"
+      api-key: "${SUBSIDIARY_D_API_KEY}"
+    - name: "子公司E"
+      api-key: "${SUBSIDIARY_E_API_KEY}"
+    - name: "子公司F"
+      api-key: "${SUBSIDIARY_F_API_KEY}"
+    - name: "子公司G"
+      api-key: "${SUBSIDIARY_G_API_KEY}"
+  # FCoE 環境
+  fcoe:
+    name: "FCoE"
+    api-key: "${FCOE_API_KEY}"
+  # HTTP Client 設定
+  http:
+    connect-timeout-seconds: 30
+    read-timeout-seconds: 60
+    max-retry: 3
+    retry-interval-seconds: 60
+
+# 同步作業設定
+sync:
+  # 要同步的 Vendor 清單（amazon = AWS, google = GCP）
+  vendors:
+    - amazon
+    - google
+  # 是否啟用刪除同步（預設關閉）
+  enable-delete: false
+  # 排程（預設每日凌晨 02:00，cron 格式: 秒 分 時 日 月 週）
+  cron: "0 0 2 * * ?"
+  # 是否啟用排程（false 表示僅手動觸發）
+  schedule-enabled: true
+
+# Log 設定
+logging:
+  level:
+    root: INFO
+    com.cathaybk: DEBUG
+  file:
+    name: ./logs/sync.log
+  logback:
+    rollingpolicy:
+      max-history: 30
+      max-file-size: 50MB
+
+# Actuator 端點（健康檢查）
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      show-details: always
