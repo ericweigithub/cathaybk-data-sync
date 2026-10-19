@@ -1,0 +1,50 @@
+# config.yaml — 國泰 Apptio 雲端認證資料同步設定
+#
+# 資安注意事項：API Key 不得明文寫入此檔案。
+# 請以 ${ENV_VAR} 格式參照環境變數，或透過密鑰管理工具（HashiCorp Vault / AWS Secrets Manager）注入。
+
+cloudability:
+  base_url: "https://api.cloudability.com/v3"
+
+  # 子公司環境（7 個）
+  subsidiaries:
+    - name: "子公司A"
+      api_key: "${SUBSIDIARY_A_API_KEY}"
+    - name: "子公司B"
+      api_key: "${SUBSIDIARY_B_API_KEY}"
+    - name: "子公司C"
+      api_key: "${SUBSIDIARY_C_API_KEY}"
+    - name: "子公司D"
+      api_key: "${SUBSIDIARY_D_API_KEY}"
+    - name: "子公司E"
+      api_key: "${SUBSIDIARY_E_API_KEY}"
+    - name: "子公司F"
+      api_key: "${SUBSIDIARY_F_API_KEY}"
+    - name: "子公司G"
+      api_key: "${SUBSIDIARY_G_API_KEY}"
+
+  # FCoE 環境（+1）
+  fcoe:
+    name: "FCoE"
+    api_key: "${FCOE_API_KEY}"
+
+  # HTTP Client 設定
+  http:
+    connect_timeout_seconds: 30
+    read_timeout_seconds: 60
+    max_retry: 3
+    retry_interval_seconds: 60
+
+sync:
+  # 要同步的 Vendor 清單（amazon = AWS, google = GCP）
+  vendors:
+    - amazon
+    - google
+  # 是否啟用刪除同步（預設關閉）
+  enable_delete: false
+  # 排程（Unix cron 格式，預設每日凌晨 02:00）
+  cron: "0 2 * * *"
+  # 是否啟用排程（false 表示僅手動觸發）
+  schedule_enabled: true
+  # Log 輸出路徑
+  log_path: "./logs/sync.log"
