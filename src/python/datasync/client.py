@@ -115,6 +115,9 @@ class CloudabilityClient:
         accounts = data.result
 
         logger.info("[%s] 讀取 %s 帳號清單完成，共 %d 筆", self._env_name, vendor, len(accounts))
+        if logger.isEnabledFor(logging.DEBUG):
+            for account in accounts:
+                logger.debug("[%s] %s 帳號：%s", self._env_name, vendor, account.vendor_account_id)
         return accounts
 
     def get_account(self, vendor: str, vendor_account_id: str) -> VendorAccount | None:

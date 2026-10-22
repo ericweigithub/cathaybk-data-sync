@@ -112,6 +112,10 @@ public class CloudabilityClient {
                 : Collections.emptyList();
 
         log.info("[{}] 讀取 {} 帳號清單完成，共 {} 筆", environmentName, vendor, accounts.size());
+        if (log.isDebugEnabled()) {
+            accounts.forEach(account ->
+                    log.debug("[{}] {} 帳號：{}", environmentName, vendor, account.getVendorAccountId()));
+        }
         return accounts;
     }
 
