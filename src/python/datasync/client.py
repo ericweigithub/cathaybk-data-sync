@@ -64,7 +64,13 @@ class CloudabilityClient:
         env_config: EnvironmentConfig,
     ) -> None:
         self._env_name = env_config.name
-        self._base_url = properties.base_url.rstrip("/")
+        # 優先使用環境專屬 base_url，未設定則 fallback 至全域預設
+        effective_base_url = (
+            env_config.base_url.rstrip("/")
+            if env_config.base_url
+            else properties.base_url.rstrip("/")
+        )
+        self._base_url = effective_base_url
         self._http_cfg = properties.http
 
         # 產生 Basic Auth Header：BASE64(api_key:)

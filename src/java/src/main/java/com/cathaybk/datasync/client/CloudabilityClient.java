@@ -57,8 +57,13 @@ public class CloudabilityClient {
                 String encoded = Base64.getEncoder().encodeToString(
                                 credentials.getBytes(StandardCharsets.UTF_8));
 
+                // 優先使用環境專屬 base-url，未設定則 fallback 至全域預設
+                String effectiveBaseUrl = (envConfig.getBaseUrl() != null && !envConfig.getBaseUrl().isBlank())
+                                ? envConfig.getBaseUrl()
+                                : properties.getBaseUrl();
+
                 this.restClient = builder
-                                .baseUrl(properties.getBaseUrl())
+                                .baseUrl(effectiveBaseUrl)
                                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + encoded)
                                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                                 .build();

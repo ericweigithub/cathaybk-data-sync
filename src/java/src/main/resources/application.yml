@@ -11,36 +11,44 @@ cloudability:
     - name: "子公司A"
       # api-key: "${SUBSIDIARY_A_API_KEY}"
       api-key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      # base-url: "https://api.cloudability.com/v3"  # 省略時使用全域 base-url
       enabled: false
     - name: "子公司B"
       # api-key: "${SUBSIDIARY_B_API_KEY}"
       api-key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      # base-url: "https://api.cloudability.com/v3"
       enabled: false
     - name: "子公司C"
       # api-key: "${SUBSIDIARY_C_API_KEY}"
       api-key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      # base-url: "https://api.cloudability.com/v3"
       enabled: false
     - name: "子公司D"
       # api-key: "${SUBSIDIARY_D_API_KEY}"
       api-key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      # base-url: "https://api.cloudability.com/v3"
       enabled: false
     - name: "子公司E"
       # api-key: "${SUBSIDIARY_E_API_KEY}"
       api-key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      # base-url: "https://api.cloudability.com/v3"
       enabled: false
     - name: "子公司F"
       # api-key: "${SUBSIDIARY_F_API_KEY}"
       api-key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      # base-url: "https://api.cloudability.com/v3"
       enabled: false
     - name: "子公司G"
       # api-key: "${SUBSIDIARY_G_API_KEY}"
       api-key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      # base-url: "https://api.cloudability.com/v3"
       enabled: false
   # FCoE 環境
   fcoe:
     name: "FCoE"
     # api-key: "${FCOE_API_KEY}"
     api-key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+    # base-url: "https://api.cloudability.com/v3"  # 省略時使用全域 base-url
   # HTTP Client 設定
   http:
     connect-timeout-seconds: 30

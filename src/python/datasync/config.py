@@ -31,6 +31,8 @@ class EnvironmentConfig:
     name: str
     api_key: str
     enabled: bool = True
+    base_url: str | None = None
+    """此環境專屬的 Base URL（選填）。未設定時 fallback 至全域 base_url。"""
 
 
 @dataclass
@@ -95,10 +97,12 @@ def _expand_env(value: str) -> str:
 
 
 def _parse_environment_config(raw: dict) -> EnvironmentConfig:
+    raw_base_url = raw.get("base_url", raw.get("base-url"))
     return EnvironmentConfig(
         name=raw.get("name", ""),
         api_key=_expand_env(str(raw.get("api_key", raw.get("api-key", "")))),
         enabled=bool(raw.get("enabled", True)),
+        base_url=str(raw_base_url) if raw_base_url is not None else None,
     )
 
 
