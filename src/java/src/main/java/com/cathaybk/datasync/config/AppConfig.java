@@ -5,8 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestClient;
 
-import java.time.Duration;
-
 /**
  * Spring 應用程式設定
  * - 啟用排程（@EnableScheduling）
@@ -22,7 +20,6 @@ public class AppConfig {
      */
     @Bean
     public RestClient.Builder restClientBuilder(CloudabilityProperties properties) {
-        CloudabilityProperties.HttpConfig http = properties.getHttp();
         return RestClient.builder()
                 .requestInterceptor((request, body, execution) -> {
                     // 設定 Content-Type（POST/PUT 使用）

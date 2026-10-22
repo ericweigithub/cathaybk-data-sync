@@ -2,7 +2,6 @@ package com.cathaybk.datasync.service;
 
 import com.cathaybk.datasync.client.CloudabilityClient;
 import com.cathaybk.datasync.client.CloudabilityClientFactory;
-import com.cathaybk.datasync.config.CloudabilityProperties;
 import com.cathaybk.datasync.config.SyncProperties;
 import com.cathaybk.datasync.exception.CloudabilityApiException;
 import com.cathaybk.datasync.model.*;
@@ -12,19 +11,20 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 雲端認證資料同步服務
  *
- * <p>實作規格書第五節的同步邏輯流程：</p>
+ * <p>
+ * 實作規格書第五節的同步邏輯流程：
+ * </p>
  * <ol>
- *   <li>逐一呼叫 7 個子公司環境取得 AWS + GCP 帳號清單</li>
- *   <li>呼叫 FCoE 環境取得現有帳號清單</li>
- *   <li>比對差異（以 vendorAccountId + vendor 為唯一鍵）</li>
- *   <li>子公司有、FCoE 無 → POST 新增</li>
- *   <li>子公司有、FCoE 有 → 比對認證設定是否異動 → 有異動則 PUT 更新</li>
- *   <li>記錄同步結果至 Log</li>
+ * <li>逐一呼叫 7 個子公司環境取得 AWS + GCP 帳號清單</li>
+ * <li>呼叫 FCoE 環境取得現有帳號清單</li>
+ * <li>比對差異（以 vendorAccountId + vendor 為唯一鍵）</li>
+ * <li>子公司有、FCoE 無 → POST 新增</li>
+ * <li>子公司有、FCoE 有 → 比對認證設定是否異動 → 有異動則 PUT 更新</li>
+ * <li>記錄同步結果至 Log</li>
  * </ol>
  */
 @Slf4j
@@ -65,8 +65,8 @@ public class SyncService {
             List<CloudabilityClient> subsidiaryClients = clientFactory.createSubsidiaryClients();
 
             for (CloudabilityClient subsidiaryClient : subsidiaryClients) {
-                SyncResult.EnvironmentSyncResult envResult =
-                        syncSubsidiary(subsidiaryClient, fcoeClient, fcoeAccountMap);
+                SyncResult.EnvironmentSyncResult envResult = syncSubsidiary(subsidiaryClient, fcoeClient,
+                        fcoeAccountMap);
 
                 envResults.add(envResult);
                 totalCreated += envResult.getCreatedCount();
@@ -290,22 +290,31 @@ public class SyncService {
         }
 
         // AWS 欄位比對
-        if (!Objects.equals(src.getRoleName(), dst.getRoleName())) return true;
-        if (!Objects.equals(src.getBucketName(), dst.getBucketName())) return true;
-        if (!Objects.equals(src.getExternalId(), dst.getExternalId())) return true;
-        if (!Objects.equals(src.getRegion(), dst.getRegion())) return true;
-        if (!Objects.equals(src.getIsOrgLevelPolicyEnabled(), dst.getIsOrgLevelPolicyEnabled())) return true;
+        if (!Objects.equals(src.getRoleName(), dst.getRoleName()))
+            return true;
+        if (!Objects.equals(src.getBucketName(), dst.getBucketName()))
+            return true;
+        if (!Objects.equals(src.getExternalId(), dst.getExternalId()))
+            return true;
+        if (!Objects.equals(src.getRegion(), dst.getRegion()))
+            return true;
+        if (!Objects.equals(src.getIsOrgLevelPolicyEnabled(), dst.getIsOrgLevelPolicyEnabled()))
+            return true;
 
         // GCP 欄位比對
-        if (!Objects.equals(src.getServiceAccountEmail(), dst.getServiceAccountEmail())) return true;
-        if (!Objects.equals(src.getProjectId(), dst.getProjectId())) return true;
+        if (!Objects.equals(src.getServiceAccountEmail(), dst.getServiceAccountEmail()))
+            return true;
+        if (!Objects.equals(src.getProjectId(), dst.getProjectId()))
+            return true;
 
         // CUR 設定比對
         Authorization.CostAndUsageReport srcCur = src.getCostAndUsageReport();
         Authorization.CostAndUsageReport dstCur = dst.getCostAndUsageReport();
         if (srcCur != null && dstCur != null) {
-            if (!Objects.equals(srcCur.getName(), dstCur.getName())) return true;
-            if (!Objects.equals(srcCur.getPrefix(), dstCur.getPrefix())) return true;
+            if (!Objects.equals(srcCur.getName(), dstCur.getName()))
+                return true;
+            if (!Objects.equals(srcCur.getPrefix(), dstCur.getPrefix()))
+                return true;
         } else if (srcCur != null || dstCur != null) {
             return true;
         }
