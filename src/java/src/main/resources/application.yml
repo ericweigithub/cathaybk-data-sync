@@ -65,7 +65,7 @@ sync:
 logging:
   level:
     root: INFO
-    com.cathaybk: DEBUG
+    "[com.cathaybk]": DEBUG
   file:
     name: ./logs/sync.log
   logback:
