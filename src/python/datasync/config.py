@@ -30,6 +30,7 @@ class EnvironmentConfig:
 
     name: str
     api_key: str
+    enabled: bool = True
 
 
 @dataclass
@@ -97,6 +98,7 @@ def _parse_environment_config(raw: dict) -> EnvironmentConfig:
     return EnvironmentConfig(
         name=raw.get("name", ""),
         api_key=_expand_env(str(raw.get("api_key", raw.get("api-key", "")))),
+        enabled=bool(raw.get("enabled", True)),
     )
 
 

@@ -315,7 +315,9 @@ class CloudabilityClientFactory:
         return CloudabilityClient(self._config, self._config.fcoe)
 
     def create_subsidiary_clients(self) -> list[CloudabilityClient]:
+        """建立所有已啟用子公司環境的 Client（enabled = false 的子公司將被跳過）"""
         return [
             CloudabilityClient(self._config, env)
             for env in self._config.subsidiaries
+            if env.enabled
         ]

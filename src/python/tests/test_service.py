@@ -333,3 +333,58 @@ class TestBuildRequest:
         # None 值不應出現
         assert "serviceAccountEmail" not in api_dict
         assert "projectId" not in api_dict
+
+
+# ---------------------------------------------------------------------------
+# enabled=false 子公司跳過測試（CloudabilityClientFactory）
+# ---------------------------------------------------------------------------
+
+
+class TestCreateSubsidiaryClientsEnabled:
+    def test_disabled_subsidiary_is_excluded(self) -> None:
+        """enabled=false 的子公司不應建立 Client"""
+        from datasync.client import CloudabilityClientFactory
+        from datasync.config import CloudabilityConfig, EnvironmentConfig, HttpConfig
+
+        config = CloudabilityConfig(
+            subsidiaries=[
+                EnvironmentConfig(name="子公司A", api_key="key-a", enabled=True),
+                EnvironmentConfig(name="子公司B", api_key="key-b", enabled=False),
+                EnvironmentConfig(name="子公司C", api_key="key-c", enabled=True),
+            ],
+            fcoe=EnvironmentConfig(name="FCoE", api_key="fcoe-key"),
+            http=HttpConfig(),
+        )
+        factory = CloudabilityClientFactory(config)
+        clients = factory.create_subsidiary_clients()
+
+        assert len(clients) == 2
+        env_names = [c._env_name for c in clients]
+        assert "子公司A" in env_names
+        assert "子公司C" in env_names
+        assert "子公司B" not in env_names
+
+    def test_all_disabled_returns_empty_list(self) -> None:
+        """所有子公司皆 enabled=false 時，回傳空清單"""
+        from datasync.client import CloudabilityClientFactory
+        from datasync.config import CloudabilityConfig, EnvironmentConfig, HttpConfig
+
+        config = CloudabilityConfig(
+            subsidiaries=[
+                EnvironmentConfig(name="子公司A", api_key="key-a", enabled=False),
+                EnvironmentConfig(name="子公司B", api_key="key-b", enabled=False),
+            ],
+            fcoe=EnvironmentConfig(name="FCoE", api_key="fcoe-key"),
+            http=HttpConfig(),
+        )
+        factory = CloudabilityClientFactory(config)
+        clients = factory.create_subsidiary_clients()
+
+        assert clients == []
+
+    def test_enabled_defaults_to_true(self) -> None:
+        """未設定 enabled 時，預設為 True（子公司納入同步）"""
+        from datasync.config import EnvironmentConfig
+
+        env = EnvironmentConfig(name="子公司X", api_key="key-x")
+        assert env.enabled is True

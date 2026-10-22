@@ -42,6 +42,9 @@ public class CloudabilityProperties {
 
         /** Cloudability API Key（請由環境變數注入，切勿明文） */
         private String apiKey;
+
+        /** 是否啟用同步（false 時跳過此子公司，預設 true） */
+        private boolean enabled = true;
     }
 
     /**

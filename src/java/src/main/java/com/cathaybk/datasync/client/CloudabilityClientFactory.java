@@ -25,12 +25,14 @@ public class CloudabilityClientFactory {
     }
 
     /**
-     * 建立所有子公司環境的 CloudabilityClient
+     * 建立所有已啟用子公司環境的 CloudabilityClient
+     * （enabled = false 的子公司將被跳過，不建立 Client）
      *
-     * @return 子公司 Client 清單（順序與 application.yml 設定相同）
+     * @return 子公司 Client 清單（僅包含 enabled = true 的子公司，順序與 application.yml 設定相同）
      */
     public List<CloudabilityClient> createSubsidiaryClients() {
         return properties.getSubsidiaries().stream()
+                .filter(CloudabilityProperties.EnvironmentConfig::isEnabled)
                 .map(env -> new CloudabilityClient(restClientBuilder.clone(), properties, env))
                 .collect(Collectors.toList());
     }

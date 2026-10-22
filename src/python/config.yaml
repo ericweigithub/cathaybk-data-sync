@@ -9,24 +9,39 @@ cloudability:
   # 子公司環境（7 個）
   subsidiaries:
     - name: "子公司A"
-      api_key: "${SUBSIDIARY_A_API_KEY}"
+      # api_key: "${SUBSIDIARY_A_API_KEY}"
+      api_key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      enabled: false
     - name: "子公司B"
-      api_key: "${SUBSIDIARY_B_API_KEY}"
+      # api_key: "${SUBSIDIARY_B_API_KEY}"
+      api_key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      enabled: false
     - name: "子公司C"
-      api_key: "${SUBSIDIARY_C_API_KEY}"
+      # api_key: "${SUBSIDIARY_C_API_KEY}"
+      api_key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      enabled: false
     - name: "子公司D"
-      api_key: "${SUBSIDIARY_D_API_KEY}"
+      # api_key: "${SUBSIDIARY_D_API_KEY}"
+      api_key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      enabled: false
     - name: "子公司E"
-      api_key: "${SUBSIDIARY_E_API_KEY}"
+      # api_key: "${SUBSIDIARY_E_API_KEY}"
+      api_key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      enabled: false
     - name: "子公司F"
-      api_key: "${SUBSIDIARY_F_API_KEY}"
+      # api_key: "${SUBSIDIARY_F_API_KEY}"
+      api_key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      enabled: false
     - name: "子公司G"
-      api_key: "${SUBSIDIARY_G_API_KEY}"
+      # api_key: "${SUBSIDIARY_G_API_KEY}"
+      api_key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
+      enabled: false
 
   # FCoE 環境（+1）
   fcoe:
     name: "FCoE"
-    api_key: "${FCOE_API_KEY}"
+    # api_key: "${FCOE_API_KEY}"
+    api_key: "aAw-9Y-djr1CzPnO2nELN6bjS4E="
 
   # HTTP Client 設定
   http:
